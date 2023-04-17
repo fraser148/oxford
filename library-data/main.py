@@ -1,4 +1,5 @@
 import requests
+import argparse
 
 days = ["Mon", "Tues", "Wed", "Thurs", "Fri", "Sat", "Sun"]
 
@@ -33,11 +34,19 @@ def parse_times(times):
 
 
 def main():
+  parser = argparse.ArgumentParser()
+  parser.add_argument('-l', '--library', help='Which library to search for', type=str)
+  args = parser.parse_args()
+
   url = "https://www.bodleian.ox.ac.uk/api/oxdrupal_listings/1782151/52517876"
 
   library_page = requests.get(url)
   data = library_page.json()
   libs = data['items']
+
+  if args.library != None:
+    query = args.library.upper()
+    libs = [k for k in libs if query in k['title'].upper()]
 
   for lib in libs:
     print(lib['title'])

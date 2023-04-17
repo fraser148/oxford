@@ -29,6 +29,8 @@ def q6a():
         bottom += C[i] * CS[i][j] * CR[i][k] * SRW[j][k][1]
 
   return top/bottom
+  # 0.576
+
 
 # Bruh idk
 def q6b():

@@ -56,7 +56,8 @@ def q5b(gaus: mixed_gaussian, n):
   x = [0]
   
   def criteria(x_can, x_n, p : mixed_gaussian, sigma):
-    return p.eval(x_can)/p.eval(x_n)*norm.pdf(x_n, x_can, sigma)/norm.pdf(x_can, x_n, sigma)
+    # return p.eval(x_can)/p.eval(x_n)*norm.pdf(x_n, x_can, sigma)/norm.pdf(x_can, x_n, sigma)
+    return p.eval(x_can)/p.eval(x_n)
 
   def step(x0, sigma):
     x_candidate = np.random.normal(x0, sigma)
@@ -71,13 +72,13 @@ def q5b(gaus: mixed_gaussian, n):
   
   x_burn = 0
   for _ in range(0, 100):
-    x_burn = step(x_burn, 20)
+    x_burn = step(x_burn, 40)
   x[-1] = x_burn
 
   # I don't think this can be done using vectors to make it faster
   # since the samples aren't independent
   for _ in range(0, n):
-    x0 = step(x[-1], 20)
+    x0 = step(x[-1], 40)
     x.append(x0)
 
   return x
